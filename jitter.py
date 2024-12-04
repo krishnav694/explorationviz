@@ -89,4 +89,5 @@ def update_immersive_visualization(selected_teams, selected_bowlers, selected_ov
     return immersive_fig
 
 # Run the app
-
+if __name__ == '__main__':
+    app.run_server(debug=True)
