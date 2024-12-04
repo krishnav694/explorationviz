@@ -1,4 +1,3 @@
-
 import dash
 from dash import dcc, html
 from dash.dependencies import Input, Output
@@ -8,6 +7,9 @@ import numpy as np
 
 # Load the corrected dataset
 ball_data_df = pd.read_csv("corrected_ball_data_with_metrics.csv")
+
+# Calculate economy rate for each bowler (runs conceded per over)
+ball_data_df['economy_rate'] = ball_data_df['runs_total'] / (ball_data_df['over'] + 1)
 
 # Create Dash app
 app = dash.Dash(__name__)
@@ -19,7 +21,7 @@ app.layout = html.Div([
     html.P(
         "Explore every ball played in the ICC 2007 Cricket Tournament. "
         "Each point represents a ball bowled, colored by the batting team. "
-        "Bubble size corresponds with the number of boundaries in the over. "
+        "Bubble size corresponds to the bowler's economy rate. "
         "Hovering over a point provides detailed information about the ball.",
         style={'textAlign': 'center', 'padding': '10px', 'margin-bottom': '20px'}
     ),
@@ -74,17 +76,17 @@ def update_immersive_visualization(selected_teams, selected_bowlers, selected_ov
     # Add horizontal jitter to the 'over' values for better distribution
     filtered_df['over_jittered'] = filtered_df['over'] + np.random.uniform(-0.1, 0.1, size=len(filtered_df))
 
-    # Immersive scatter plot with horizontal jitter
+    # Immersive scatter plot with horizontal jitter and economy size
     immersive_fig = px.scatter(
         filtered_df,
         x="over_jittered",
         y="runs_total",
-        size="boundaries",
+        size="economy_rate",  # Size of dots based on bowler economy rate
         color="batting_team",
         opacity=0.6,
-        hover_data=["batter", "bowler", "runs_batter", "dot_balls"],
+        hover_data=["batter", "bowler", "runs_batter", "dot_balls"],  # Removed boundaries
         title="How teams performed over the 20 overs?",
-        labels={'runs_total': 'Total Runs', 'over_jittered': 'Over Number (Jittered)', 'boundaries': 'Boundaries'}
+        labels={'runs_total': 'Total Runs', 'over_jittered': 'Over Number (Jittered)', 'economy_rate': 'Bowler Economy Rate'}
     )
 
     return immersive_fig
