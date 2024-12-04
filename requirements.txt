@@ -14,5 +14,5 @@ dash-mantine-components==0.12.0
 dash-iconify==0.1.2
 ruamel.yaml==0.17.21
 setuptools
-ploty
+plotly
 numpy
