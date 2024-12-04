@@ -82,7 +82,7 @@ def update_immersive_visualization(selected_teams, selected_bowlers, selected_ov
         size="boundaries",
         color="batting_team",
         opacity=0.6,
-        hover_data=["batter", "bowler", "runs_batter", "wicket_kind", "dot_balls"],
+        hover_data=["batter", "bowler", "runs_batter", "dot_balls"],
         title="How teams performed over the 20 overs?",
         labels={'runs_total': 'Total Runs', 'over_jittered': 'Over Number (Jittered)', 'boundaries': 'Boundaries'}
     )
