@@ -11,6 +11,7 @@ ball_data_df = pd.read_csv("corrected_ball_data_with_metrics.csv")
 
 # Create Dash app
 app = dash.Dash(__name__)
+server = app.server
 
 # App layout
 app.layout = html.Div([
