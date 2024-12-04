@@ -11,7 +11,6 @@ ball_data_df = pd.read_csv("corrected_ball_data_with_metrics.csv")
 
 # Create Dash app
 app = dash.Dash(__name__)
-server = app.server
 
 # App layout
 app.layout = html.Div([
@@ -90,5 +89,4 @@ def update_immersive_visualization(selected_teams, selected_bowlers, selected_ov
     return immersive_fig
 
 # Run the app
-if __name__ == '__main__':
-    app.run_server(debug=True)
+
