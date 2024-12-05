@@ -8,6 +8,9 @@ import numpy as np
 # Load the corrected dataset
 ball_data_df = pd.read_csv("corrected_ball_data_with_metrics.csv")
 
+# Ensure points have a minimum size for `runs_batter`
+ball_data_df['runs_batter_size'] = ball_data_df['runs_batter'].apply(lambda x: max(x, 1))
+
 # Create Dash app
 app = dash.Dash(__name__)
 server = app.server
@@ -18,7 +21,7 @@ app.layout = html.Div([
     html.P(
         "Explore every ball played in the ICC 2007 Cricket Tournament. "
         "Each point represents a ball bowled, colored by the batting team. "
-        "Bubble size corresponds to the runs scored by the batter. "
+        "Bubble size corresponds to the runs scored by the batter (with a minimum size for visibility). "
         "Hovering over a point provides detailed information about the ball.",
         style={'textAlign': 'center', 'padding': '10px', 'margin-bottom': '20px'}
     ),
@@ -73,18 +76,17 @@ def update_immersive_visualization(selected_teams, selected_bowlers, selected_ov
     # Add horizontal jitter to the 'over' values for better distribution
     filtered_df['over_jittered'] = filtered_df['over'] + np.random.uniform(-0.1, 0.1, size=len(filtered_df))
 
-    # Immersive scatter plot with horizontal jitter and runs_batter size
+    # Immersive scatter plot with horizontal jitter and adjusted size
     immersive_fig = px.scatter(
         filtered_df,
         x="over_jittered",
         y="runs_total",
-        size="runs_batter",  # Size of dots based on runs scored by the batter
+        size="runs_batter_size",  # Size of dots based on adjusted `runs_batter`
         color="batting_team",
         opacity=0.6,
-        size_min=5,  # Ensure points with 0 runs_batter are visible as small circles
-        hover_data=["batter", "bowler", "runs_batter", "dot_balls"],
+        hover_data=["batter", "bowler", "runs_batter", "dot_balls"],  # Relevant hover data
         title="How teams performed over the 20 overs?",
-        labels={'runs_total': 'Total Runs', 'over_jittered': 'Over Number (Jittered)', 'runs_batter': 'Runs by Batter'}
+        labels={'runs_total': 'Total Runs', 'over_jittered': 'Over Number (Jittered)', 'runs_batter_size': 'Runs by Batter (Adjusted)'}
     )
 
     return immersive_fig
