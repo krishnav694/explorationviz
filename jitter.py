@@ -19,7 +19,6 @@ app.layout = html.Div([
         "Explore every ball played in the ICC 2007 Cricket Tournament. "
         "Each point represents a ball bowled, colored by the batting team. "
         "Bubble size corresponds to the runs scored by the batter. "
-        "Points with zero runs are still displayed as small but visible circles. "
         "Hovering over a point provides detailed information about the ball.",
         style={'textAlign': 'center', 'padding': '10px', 'margin-bottom': '20px'}
     ),
