@@ -19,10 +19,9 @@ server = app.server
 app.layout = html.Div([
     html.H1("ICC 2007 Cricket Tournament Explorer", style={'textAlign': 'center'}),
     html.P(
-        "Explore every ball played in the ICC 2007 Cricket Tournament. "
+        "Explore batting performance of all teams in the ICC 2007 Cricket Tournament. "
         "Each point represents a ball bowled, colored by the batting team. "
-        "Bubble size corresponds to the runs scored by the batter (with a minimum size for visibility). "
-        "Hovering over a point provides detailed information about the ball.",
+        "Bubble size corresponds to the runs scored by the batter. ",
         style={'textAlign': 'center', 'padding': '10px', 'margin-bottom': '20px'}
     ),
     html.Div([
@@ -84,9 +83,7 @@ def update_immersive_visualization(selected_teams, selected_bowlers, selected_ov
         size="runs_batter_size",  # Size of dots based on adjusted `runs_batter`
         color="batting_team",
         opacity=0.6,
-        hover_data=["batter", "bowler", "runs_batter", "dot_balls"],  # Relevant hover data
-        title="How teams performed over the 20 overs?",
-        labels={'runs_total': 'Total Runs', 'over_jittered': 'Over Number (Jittered)', 'runs_batter_size': 'Runs by Batter (Adjusted)'}
+        hover_data=["batter", "bowler", "over", "non_striker", "runs_batter", "runs_extras", "runs_total", "venue", "date"],  # Relevant hover data
     )
 
     return immersive_fig
